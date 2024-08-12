@@ -1,7 +1,18 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { CartWidget } from "./CartWidget";
+import { useEffect, useState } from "react";
 
 export const NavBar = () => {
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+		fetch("https://fakestoreapi.com/products/categories")
+			.then(res => res.json())
+			.then(data => setCategories(data))
+
+  }, []);
+
+
   return (
     <>
       <Flex
@@ -14,8 +25,12 @@ export const NavBar = () => {
         bg="purple.100"
       >
         <Text as='cite' color={"black"} fontSize='2xl'>Brain Breaker</Text>
-        <Text>Puzzles</Text>
-        <Text>Maquetas</Text>
+
+        {categories && categories.map((category) => {
+          return (
+            <Text key={category}>{category}</Text>
+          )
+        })}
         <CartWidget/>
       </Flex>
     </>
