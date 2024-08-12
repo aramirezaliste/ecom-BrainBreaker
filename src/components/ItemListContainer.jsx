@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Item } from "./item";
-import { SimpleGrid } from "@chakra-ui/react";
+import { Container, Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom"
 
 
@@ -12,21 +12,26 @@ export const ItemListContainer = () => {
 
 	useEffect(() => {
 		setIsloading(true)
-		if (categoryName) {
-			fetch(`https://fakestoreapi.com/products/category/${categoryName}`)
-				.then(res => res.json())
-				.then(data => setProducts(data))
-				.finally(setIsloading(false))
-		} else {
-			fetch("https://fakestoreapi.com/products")
-				.then(res => res.json())
-				.then(data => setProducts(data))
-				.finally(setIsloading(false))
-		}
+			if (categoryName) {
+				fetch(`https://fakestoreapi.com/products/category/${categoryName}`)
+					.then(res => res.json())
+					.then(data => setProducts(data))
+					.finally(setIsloading(false))
+			} else {
+				fetch("https://fakestoreapi.com/products")
+					.then(res => res.json())
+					.then(data => setProducts(data))
+					.finally(setIsloading(false))
+			}
+		
 	}, [categoryName]);
 
 	if(isLoading){
-		return(<h1>Loading...</h1>)
+		return (
+			<Flex align='center' justify='center' h='30em'>
+				<Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='purple.500' size='xl' />
+			</Flex>
+		)
 	}
 	
 	return (

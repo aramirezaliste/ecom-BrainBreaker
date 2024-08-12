@@ -1,22 +1,45 @@
 import { Box, Image, Text, Flex, Badge, Button } from "@chakra-ui/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const Item = ({ product }) => {
+	const [count, setCount] = useState(1)
 	const { id, title, price, category, description, image } = product;
+
+	const increaseCount = () => {
+		setCount(count + 1)
+	}
+
+	const decreaseCount = () => {
+		if (count > 1) {
+			setCount(count - 1)
+		}
+	}
 
 	return (
 		<Box align='center' m='3'>
-			<Box borderWidth='1px' borderRadius='lg' overflow='hidden' align='center' minH='35em'>
+			<Box borderWidth='1px' borderRadius='lg' overflow='hidden' align='center' minH='38em'>
 				<Flex direction='column' align='center' wrap='wrap'>
-				<Image pt='10' boxSize='20em' objectFit='contain' src={image} alt={title} />
-				<Badge mt='3' borderRadius='full' px='2' colorScheme='purple'>
-					<Link to={`/categoria/${category}`}>{category}</Link>
-				</Badge>
+					<Image pt='10' boxSize='20em' objectFit='contain' src={image} alt={title} />
+					<Badge mt='3' borderRadius='full' px='2' colorScheme='purple'>
+						<Link to={`/categoria/${category}`}>{category}</Link>
+					</Badge>
 				</Flex>
 				<Box p='6'>
 					<Flex direction='column'>
 						<Text as='cite'>{title}</Text>
 						<Text fontSize='2xl' as='abbr' p='2'>US ${price}</Text>
+					</Flex>
+					<Flex align='center' justify='center' pb='2'>
+						<Button size='sm' variant="solid" colorScheme="purple" mx='1' onClick={decreaseCount}>
+							-
+						</Button>
+						<Box w='2em' h='2em' borderWidth='1px' borderRadius='lg' overflow='hidden' pt='1'>
+							<Text color='purple.700'> {count}</Text>
+						</Box>
+						<Button size='sm' variant="solid" colorScheme="purple" ml='1' mr='3' onClick={increaseCount}>
+							+
+						</Button>
 					</Flex>
 					<Button variant="solid" colorScheme="purple" m='1'>
 						Añadir al Carrito
