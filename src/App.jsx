@@ -1,25 +1,24 @@
 import { ItemListContainer } from "./components/ItemListContainer";
 import { NavBar } from "./components/NavBar";
-import { BrowserRouter as Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/App.css";
+import { ItemDetail } from "./components/ItemDetail";
+import { ErrorPage } from "./components/404Page";
 
 function App() {
-  return (
-    <Routes>
-      <NavBar />
+	return (
+		<BrowserRouter>
+			<NavBar />
 
-      <Switch>
-        <Route path="/">
-          <ItemListContainer />
-        </Route>
-        <Route path="/cate/:id">
-          <ItemListContainer />
-        </Route>
-      </Switch>
+			<Routes>
+				<Route path="/" element={<ItemListContainer />} />
+				<Route path="/categoria/:categoryName" element={<ItemListContainer />} />
+				<Route path="/detalle/:id" element={<ItemDetail />} />
+				<Route path="*" element={<ErrorPage/>} />
+			</Routes>
 
-      <ItemListContainer />
-    </Routes>
-  );
+		</BrowserRouter>
+	);
 }
 
 export default App;
