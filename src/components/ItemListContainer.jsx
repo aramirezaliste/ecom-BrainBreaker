@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Item } from "./item";
 import { Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom"
-import { CartContext } from "../context/CartContext";
 
 export const ItemListContainer = () => {
 	const [products, setProducts] = useState([]);

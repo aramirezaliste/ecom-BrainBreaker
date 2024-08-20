@@ -1,15 +1,16 @@
 import { Box, Image, Text, Flex, Badge, Button } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 export const ItemDetail = () => {
     const [detail, setDetail] = useState([]);
     const [isLoading, setIsloading] = useState(false)
     const [count, setCount] = useState(1)
 
-    const { id } = useParams();
+    const { addToCart} = useContext(CartContext)
 
+    const { id } = useParams();
     const { title, price, category, description, image } = detail;
 
     useEffect(() => {
@@ -30,6 +31,10 @@ export const ItemDetail = () => {
         }
     }
 
+    const addPorductAndCount = (product) => {
+        const productAndCount = {...product, 'count': count }
+        addToCart(productAndCount)
+    }
 
     if (isLoading) {
         return (
@@ -64,7 +69,7 @@ export const ItemDetail = () => {
                         <Button size='sm' variant="solid" colorScheme="purple" ml='1' mr='3' onClick={increaseCount}>
                             +
                         </Button>
-                        <Button variant="solid" colorScheme="purple">
+                        <Button variant="solid" colorScheme="purple" onClick={()=>{addPorductAndCount(detail)}}>
                             Añadir al Carrito
                         </Button>
                     </Flex>
