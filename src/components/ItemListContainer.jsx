@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Item } from "./item";
-import { Container, Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom"
-
+import { CartContext } from "../context/CartContext";
 
 export const ItemListContainer = () => {
 	const [products, setProducts] = useState([]);
@@ -35,6 +35,7 @@ export const ItemListContainer = () => {
 	}
 	
 	return (
+		
 		<SimpleGrid columns={{sm: 2, md: 3}} spacing={1}>
 		{ products.map((product) => {
 			return (
