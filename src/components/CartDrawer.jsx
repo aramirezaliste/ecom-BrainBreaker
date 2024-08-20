@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Text } from "@chakra-ui/react"
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react"
 import { CartContext } from "../context/CartContext"
 
 export function CartDrawer({ isOpen, onClose, btnRef }) {
@@ -11,18 +11,39 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                 placement='right'
                 onClose={onClose}
                 finalFocusRef={btnRef}
+                size='lg'
             >
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>Todos tus productos</DrawerHeader>
+                    <DrawerHeader>Carrito</DrawerHeader>
 
                     <DrawerBody>
-                        {
-                            cart.map((e) => {
-                                return (<Text fontSize='xs' key={e.id}> {e.count} {e.title} </Text>)
-                            })
-                        }
+                        <TableContainer>
+                            <Table size='md'>
+                                <Thead>
+                                    <Tr>
+                                        <Th>PRODUCTO</Th>
+                                        <Th>CANT.</Th>
+                                        <Th isNumeric>PRECIO UNI.</Th>
+                                        <Th isNumeric>SUBTOTAL</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {
+                                        cart.map((e) => {
+                                            return (
+                                            <Tr fontSize='ms' key={e.id}>
+                                                <Td>{e.title.slice(0, 30) + '...'}</Td>
+                                                <Td>{e.count}</Td>
+                                                <Td isNumeric>US ${e.price}</Td>
+                                                <Td isNumeric>US ${e.price * e.count}</Td>
+                                            </Tr>)
+                                        })
+                                    }
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
                     </DrawerBody>
 
                     <DrawerFooter>

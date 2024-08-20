@@ -1,10 +1,16 @@
 import { Box, Image, Text, Flex, Badge, Button } from "@chakra-ui/react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate} from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+import '../styles/Item.css'
 
 export const Item = ({ product }) => {
 	const [count, setCount] = useState(1)
 	const { id, title, price, category, description, image } = product;
+	
+	const { addToCart } = useContext(CartContext)
+
+	const navigate = useNavigate();
 
 	const increaseCount = () => {
 		setCount(count + 1)
@@ -16,11 +22,16 @@ export const Item = ({ product }) => {
 		}
 	}
 
+	const addPorductAndCount = (product) => {
+        const productAndCount = {...product, 'count': count }
+        addToCart(productAndCount)
+    }
+
 	return (
-		<Box align='center' m='3'>
+		<Box align='center' m='3' >
 			<Box borderWidth='1px' borderRadius='lg' overflow='hidden' align='center' minH='38em'>
 				<Flex direction='column' align='center' wrap='wrap'>
-					<Image pt='10' boxSize='20em' objectFit='contain' src={image} alt={title} />
+					<Image className='item-image' pt='10' boxSize='20em' objectFit='contain' src={image} alt={title} onClick={() => navigate(`/detalle/${id}`)}/>
 					<Badge mt='3' borderRadius='full' px='2' colorScheme='purple'>
 						<Link to={`/categoria/${category}`}>{category}</Link>
 					</Badge>
@@ -41,7 +52,7 @@ export const Item = ({ product }) => {
 							+
 						</Button>
 					</Flex>
-					<Button variant="solid" colorScheme="purple" m='1'>
+					<Button variant="solid" colorScheme="purple" m='1' onClick={()=>{addPorductAndCount(product)}}>
 						Añadir al Carrito
 					</Button>
 					<Button variant="solid" colorScheme="purple" m='1'>
