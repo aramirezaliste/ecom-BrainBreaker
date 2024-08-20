@@ -1,9 +1,13 @@
 import React, { useContext } from "react"
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react"
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react"
 import { CartContext } from "../context/CartContext"
+import '../styles/CartDrawer.css'
+import { CartDrawerTable } from "./CartDrawerTable"
 
 export function CartDrawer({ isOpen, onClose, btnRef }) {
+
     const { cart } = useContext(CartContext)
+
     return (
         <>
             <Drawer
@@ -11,7 +15,7 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                 placement='right'
                 onClose={onClose}
                 finalFocusRef={btnRef}
-                size='lg'
+                size='xl'
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -19,26 +23,23 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                     <DrawerHeader>Carrito</DrawerHeader>
 
                     <DrawerBody>
-                        <TableContainer>
-                            <Table size='md'>
+                        <TableContainer m='1'>
+                            <Table size='sm' variant='simple'>
                                 <Thead>
                                     <Tr>
                                         <Th>PRODUCTO</Th>
-                                        <Th>CANT.</Th>
-                                        <Th isNumeric>PRECIO UNI.</Th>
-                                        <Th isNumeric>SUBTOTAL</Th>
+                                        <Th p='1' >CANT.</Th>
+                                        <Th p='2' isNumeric>PRECIO UNI.</Th>
+                                        <Th p='2' isNumeric>SUBTOTAL</Th>
+                                        <Th></Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
                                     {
-                                        cart.map((e) => {
+                                        cart.sort((a, b)=> a.id - b.id ).map((product) => {
                                             return (
-                                            <Tr fontSize='ms' key={e.id}>
-                                                <Td>{e.title.slice(0, 30) + '...'}</Td>
-                                                <Td>{e.count}</Td>
-                                                <Td isNumeric>US ${e.price}</Td>
-                                                <Td isNumeric>US ${e.price * e.count}</Td>
-                                            </Tr>)
+                                                <CartDrawerTable product={product}/>
+                                                )
                                         })
                                     }
                                 </Tbody>
@@ -48,7 +49,7 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
 
                     <DrawerFooter>
                         <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancelar
+                            Cerrar
                         </Button>
                         <Button colorScheme='purple'>Finalizar compra</Button>
                     </DrawerFooter>

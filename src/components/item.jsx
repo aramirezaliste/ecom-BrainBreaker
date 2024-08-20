@@ -56,7 +56,7 @@ export const Item = ({ product }) => {
 						Añadir al Carrito
 					</Button>
 					<Button variant="solid" colorScheme="purple" m='1'>
-						<Link to={`/detalle/${id}`} > Detalle </Link>
+						<Link to={`/detalle/${id}`} >Ver Detalle </Link>
 					</Button>
 				</Box>
 			</Box>
