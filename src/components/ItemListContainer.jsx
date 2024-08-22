@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Item } from "./item";
 import { Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom"
@@ -9,39 +9,70 @@ export const ItemListContainer = () => {
 
 	const { categoryName } = useParams();
 
-	useEffect(() => {
+	const fetchProducts = useCallback( async () => {
 		setIsloading(true)
-			if (categoryName) {
-				fetch(`https://fakestoreapi.com/products/category/${categoryName}`)
-					.then(res => res.json())
-					.then(data => setProducts(data))
-					.finally(setIsloading(false))
-			} else {
-				fetch("https://fakestoreapi.com/products")
-					.then(res => res.json())
-					.then(data => setProducts(data))
-					.finally(setIsloading(false))
-			}
-		
-	}, [categoryName]);
+		if (categoryName) {
+			try {
+				const response = await fetch(`https://fakestoreapi.com/products/category/${categoryName}`)
+				if (response.ok) {
+					const data = await response.json()
+					setProducts(data)
+					setIsloading(false)
+				} else {
+					if (response.status === 404) throw new Error("404, Not found")
+					if (response.status === 500) throw new Error("500, Internal server error")
+					//Otro error en el servidor
+					throw new Error(response.status)
+				}
 
-	if(isLoading){
+			} catch (err) {
+				console.log(err);
+
+			}
+
+		} else {
+			try {
+				const response = await fetch(`https://fakestoreapi.com/products`)
+				if (response.ok) {
+					const data = await response.json()
+					setProducts(data)
+					setIsloading(false)
+				} else {
+					if (response.status === 404) throw new Error("404, Not found")
+					if (response.status === 500) throw new Error("500, Internal server error")
+					if (response.status === 500) throw new Error("500, Internal server error")
+					//Otro error en el servidor
+					throw new Error(response.status)
+				}
+
+			} catch (err) {
+				console.log(err);
+			}
+
+		}
+	},[categoryName])
+
+	useEffect(() => {
+		fetchProducts()
+	}, [fetchProducts]);
+
+	if (isLoading) {
 		return (
 			<Flex align='center' justify='center' h='30em'>
 				<Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='purple.500' size='xl' />
 			</Flex>
 		)
-	}
-	
-	return (
-		
-		<SimpleGrid columns={{sm: 2, md: 3}} spacing={1}>
-		{ products.map((product) => {
-			return (
-				<Item key={product.id} product={product} />
-				)
-			})
-		}
-		</SimpleGrid>
+	} else {
+		return (
+			<SimpleGrid columns={{ sm: 2, md: 3 }} spacing={1}>
+				{products.map((product) => {
+					return (
+						<Item key={product.id} product={product} />
+					)
+				})
+				}
+			</SimpleGrid>
 		)
+	}
+
 };

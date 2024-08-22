@@ -28,7 +28,7 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                                 <Thead>
                                     <Tr>
                                         <Th>PRODUCTO</Th>
-                                        <Th p='1' >CANT.</Th>
+                                        <Th p='2' >CANT.</Th>
                                         <Th p='2' isNumeric>PRECIO UNI.</Th>
                                         <Th p='2' isNumeric>SUBTOTAL</Th>
                                         <Th></Th>
@@ -38,7 +38,7 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                                     {
                                         cart.sort((a, b)=> a.id - b.id ).map((product) => {
                                             return (
-                                                <CartDrawerTable product={product}/>
+                                                <CartDrawerTable key={product.id} product={product}/>
                                                 )
                                         })
                                     }

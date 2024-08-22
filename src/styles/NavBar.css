@@ -1,0 +1,3 @@
+.nav-cat::first-letter {
+    text-transform: capitalize;
+}
