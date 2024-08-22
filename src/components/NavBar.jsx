@@ -1,6 +1,6 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { CartWidget } from "./CartWidget";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import '../styles/NavBar.css'
@@ -39,7 +39,7 @@ export const NavBar = () => {
 	if (width < 730) {
 		return (
 			<>
-				<Flex as="nav" align="center" justify="space-between" wrap="wrap" w="100%" p={3} bg="purple.100" >
+				<Flex as="nav" align="center" justify="space-between" wrap="wrap" w="100%" p={3} bg="purple.100" className="nav-fixed" >
 					<Menu >
 						<MenuButton as={Button} size='sm' px='2' >
 							<HamburgerIcon />
@@ -61,7 +61,7 @@ export const NavBar = () => {
 	} else {
 		return (
 			<>
-				<Flex as="nav" align="center" justify="space-between" wrap="wrap" w="100%" p={3} bg="purple.100" >
+				<Flex as="nav" align="center" justify="space-between" wrap="wrap" w="100%" p={3} bg="purple.100" className="nav-fixed">
 					<Text as='cite' color={"black"} fontSize='2xl'><Link to='/'>Brain Breaker</Link></Text>
 					{categories && categories.map((category) => {
 						return (

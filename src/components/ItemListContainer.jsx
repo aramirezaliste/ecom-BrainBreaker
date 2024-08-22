@@ -9,7 +9,7 @@ export const ItemListContainer = () => {
 
 	const { categoryName } = useParams();
 
-	const fetchProducts = useCallback( async () => {
+	const fetchProducts = useCallback(async () => {
 		setIsloading(true)
 		if (categoryName) {
 			try {
@@ -50,7 +50,7 @@ export const ItemListContainer = () => {
 			}
 
 		}
-	},[categoryName])
+	}, [categoryName])
 
 	useEffect(() => {
 		fetchProducts()
@@ -64,7 +64,7 @@ export const ItemListContainer = () => {
 		)
 	} else {
 		return (
-			<SimpleGrid columns={{ sm: 2, md: 3 }} spacing={1}>
+			<SimpleGrid columns={{ sm: 2, md: 3 }} spacing={1} mt='4em'>
 				{products.map((product) => {
 					return (
 						<Item key={product.id} product={product} />
