@@ -45,7 +45,7 @@ export const ItemDetail = () => {
     }
 
     return (
-        <Box align='center' m='3'>
+        <Box align='center' m='3' mt='5em'>
             <Box maxW='50em' borderWidth='1px' borderRadius='lg' overflow='hidden' align='center'>
                 <Flex direction='column' align='center' wrap='wrap'>
                     <Image pt='10' boxSize='20em' objectFit='contain' src={image} alt={title} />

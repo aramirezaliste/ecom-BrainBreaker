@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Item } from "./item";
 import { Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom"
@@ -64,7 +64,7 @@ export const ItemListContainer = () => {
 		)
 	} else {
 		return (
-			<SimpleGrid columns={{ sm: 2, md: 3 }} spacing={1} mt='4em'>
+			<SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={1} mt='4.5em'>
 				{products.map((product) => {
 					return (
 						<Item key={product.id} product={product} />

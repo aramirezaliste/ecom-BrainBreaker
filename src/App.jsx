@@ -5,6 +5,7 @@ import "./styles/App.css";
 import { ItemDetail } from "./components/ItemDetail";
 import { ErrorPage } from "./components/404Page";
 import { CartContextProvider } from "./context/CartContext";
+import { Checkout } from "./components/Checkout";
 
 function App() {
 	return (
@@ -17,6 +18,8 @@ function App() {
 				<Route path="/" element={<ItemListContainer />} />
 				<Route path="/categoria/:categoryName" element={<ItemListContainer />} />
 				<Route path="/detalle/:id" element={<ItemDetail />} />
+				<Route path="/cart/checkout" element={<Checkout />} />
+
 				<Route path="*" element={<ErrorPage/>} />
 			</Routes>
 

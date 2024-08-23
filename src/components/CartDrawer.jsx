@@ -3,6 +3,7 @@ import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFoo
 import { CartContext } from "../context/CartContext"
 import '../styles/CartDrawer.css'
 import { CartDrawerTable } from "./CartDrawerTable"
+import { Link } from "react-router-dom"
 
 export function CartDrawer({ isOpen, onClose, btnRef }) {
 
@@ -51,7 +52,7 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                         <Button variant='outline' mr={3} onClick={onClose}>
                             Cerrar
                         </Button>
-                        <Button colorScheme='purple'>Finalizar compra</Button>
+                        <Button colorScheme='purple' onClick={onClose} ><Link to='/cart/checkout'>Finalizar compra</Link></Button>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

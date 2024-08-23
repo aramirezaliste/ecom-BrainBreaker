@@ -15,13 +15,18 @@ export const CartContextProvider = ({ children }) => {
         setCart(newCart)
     }
 
-    const cartCount = () => {
+    const cartItemCount = () => {
         return cart.reduce((acc, cur) => acc + cur.count, 0)
     }
-    const count = cartCount()
+    const count = cartItemCount()
+
+    const cartTotalPrice = () => {
+        return cart.reduce((acc, cur) => acc + (cur.price * cur.count), 0)
+    }
+    const totalPrice = cartTotalPrice()
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, count, removeFromCart }}>
+        <CartContext.Provider value={{ cart, addToCart, count, removeFromCart, totalPrice }}>
             {children}
         </CartContext.Provider>
     )

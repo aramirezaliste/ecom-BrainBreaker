@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
 import { DeleteIcon, AddIcon, MinusIcon } from '@chakra-ui/icons'
 import { Box, Button, Flex, Td, Tr } from "@chakra-ui/react"
