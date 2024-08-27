@@ -1,40 +1,21 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { CartWidget } from "./CartWidget";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import '../styles/NavBar.css'
-
+import { useFetch } from "../hooks/useFetch";
 
 export const NavBar = () => {
-	const [categories, setCategories] = useState([])
 	const [width, setWidth] = useState(window.innerWidth)
+	const url = 'https://fakestoreapi.com/products/categories'
 
+	const { data:categories } = useFetch(url)
+	
 	const handleResize = () => {
 		setWidth(window.innerWidth)
 	}
 	window.addEventListener('resize', handleResize)
-
-	const fetchProducts = useCallback( async () => {
-			try {
-				const response = await fetch('https://fakestoreapi.com/products/categories')
-				if (response.ok) {
-					const data = await response.json()
-					setCategories(data)
-				} else {
-					if (response.status === 404) throw new Error("404, Not found")
-					if (response.status === 500) throw new Error("500, Internal server error")
-					//Otro error en el servidor
-					throw new Error(response.status)
-				}
-			} catch (err) {
-				console.log(err);
-			}
-		})
-
-	useEffect(() => {
-		fetchProducts()
-	}, [fetchProducts]);
 
 	if (width < 730) {
 		return (

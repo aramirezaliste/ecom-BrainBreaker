@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react"
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Table, TableContainer, Tbody, Text, Th, Thead, Tr } from "@chakra-ui/react"
 import { CartContext } from "../context/CartContext"
 import '../styles/CartDrawer.css'
 import { CartDrawerTable } from "./CartDrawerTable"
@@ -24,28 +24,32 @@ export function CartDrawer({ isOpen, onClose, btnRef }) {
                     <DrawerHeader>Carrito</DrawerHeader>
 
                     <DrawerBody>
-                        <TableContainer m='1'>
-                            <Table size='sm' variant='simple'>
-                                <Thead>
-                                    <Tr>
-                                        <Th>PRODUCTO</Th>
-                                        <Th p='2' >CANT.</Th>
-                                        <Th p='2' isNumeric>PRECIO UNI.</Th>
-                                        <Th p='2' isNumeric>SUBTOTAL</Th>
-                                        <Th></Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {
-                                        cart.sort((a, b)=> a.id - b.id ).map((product) => {
-                                            return (
-                                                <CartDrawerTable key={product.id} product={product}/>
+                        {cart.length == 0 ?
+                            <Text fontSize='2xl'>Carrito Vacio...</Text>
+                            :
+                            <TableContainer m='1'>
+                                <Table size='sm' variant='simple'>
+                                    <Thead>
+                                        <Tr>
+                                            <Th>PRODUCTO</Th>
+                                            <Th p='2' >CANT.</Th>
+                                            <Th p='2' isNumeric>PRECIO UNI.</Th>
+                                            <Th p='2' isNumeric>SUBTOTAL</Th>
+                                            <Th></Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {
+                                            cart.sort((a, b) => a.id - b.id).map((product) => {
+                                                return (
+                                                    <CartDrawerTable key={product.id} product={product} />
                                                 )
-                                        })
-                                    }
-                                </Tbody>
-                            </Table>
-                        </TableContainer>
+                                            })
+                                        }
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        }
                     </DrawerBody>
 
                     <DrawerFooter>

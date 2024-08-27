@@ -1,60 +1,22 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Item } from "./item";
 import { Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom"
+import { useFetch } from "../hooks/useFetch";
 
 export const ItemListContainer = () => {
-	const [products, setProducts] = useState([]);
-	const [isLoading, setIsloading] = useState(true)
-
+	const [url, setUrl] = useState(null)
 	const { categoryName } = useParams();
 
-	const fetchProducts = useCallback(async () => {
-		setIsloading(true)
+	useEffect(() => {
 		if (categoryName) {
-			try {
-				const response = await fetch(`https://fakestoreapi.com/products/category/${categoryName}`)
-				if (response.ok) {
-					const data = await response.json()
-					setProducts(data)
-					setIsloading(false)
-				} else {
-					if (response.status === 404) throw new Error("404, Not found")
-					if (response.status === 500) throw new Error("500, Internal server error")
-					//Otro error en el servidor
-					throw new Error(response.status)
-				}
-
-			} catch (err) {
-				console.log(err);
-
-			}
-
+			setUrl(`https://fakestoreapi.com/products/category/${categoryName}`)
 		} else {
-			try {
-				const response = await fetch(`https://fakestoreapi.com/products`)
-				if (response.ok) {
-					const data = await response.json()
-					setProducts(data)
-					setIsloading(false)
-				} else {
-					if (response.status === 404) throw new Error("404, Not found")
-					if (response.status === 500) throw new Error("500, Internal server error")
-					if (response.status === 500) throw new Error("500, Internal server error")
-					//Otro error en el servidor
-					throw new Error(response.status)
-				}
-
-			} catch (err) {
-				console.log(err);
-			}
-
+			setUrl('https://fakestoreapi.com/products')
 		}
 	}, [categoryName])
 
-	useEffect(() => {
-		fetchProducts()
-	}, [fetchProducts]);
+	const { data: products, isLoading } = useFetch(url)
 
 	if (isLoading) {
 		return (
