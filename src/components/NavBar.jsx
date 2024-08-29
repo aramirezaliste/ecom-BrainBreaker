@@ -28,7 +28,7 @@ export const NavBar = () => {
 						<MenuList >
 							{categories && categories.map((category) => {
 								return (
-									<MenuItem key={category}><Link className='nav-cat' to={`/categoria/${category}`} >{category}</Link></MenuItem>
+									<MenuItem key={category}><Link className='nav-cat' to={`/categoria/${category}` } >{category}</Link></MenuItem>
 								)
 							})}
 							<MenuItem><Link to={`/`}>All Articles</Link></MenuItem>
